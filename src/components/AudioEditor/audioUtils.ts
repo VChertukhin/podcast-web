@@ -29,8 +29,7 @@ export const audioBufferSlice = (
 	buffer: AudioBuffer,
 	begin: number,
 	end: number,
-	callback: (newBuff: AudioBuffer | undefined, e: any) => void,
-) => {
+): AudioBuffer => {
 	const audioContext = audioCtx
 
 	let error = null;
@@ -45,10 +44,6 @@ export const audioBufferSlice = (
 
 	if (end > duration) {
 		error = new RangeError('end time must be less than or equal to ' + duration);
-	}
-
-	if (typeof callback !== 'function') {
-		error = new TypeError('callback must be a function');
 	}
 
 	const startOffset = rate * begin;
@@ -67,9 +62,10 @@ export const audioBufferSlice = (
 		}
 	} catch (e) {
 		error = e;
+		console.error(e);
 	}
 
-	callback(newArrayBuffer, error);
+	return newArrayBuffer as AudioBuffer;
 }
 
 export const concatAudioBuffers = (audioCtx: AudioContext, buffers: AudioBuffer[]): AudioBuffer => {
