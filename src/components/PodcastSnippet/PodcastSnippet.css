@@ -19,7 +19,8 @@
 .PodcastSnippet__info {
     position: relative;
 }
-.PodcastSnippet__info .Button {
+.PodcastSnippet__info .Button,
+.PodcastSnippet__info .Icon--play_circle_24 {
     position: absolute;
     left: 12px;
     bottom: 12px;
@@ -32,7 +33,11 @@
     color: #4C4F54;
 }
 
-.PodcastSnippet__name {
+.PodcastSnippet--ios .PodcastSnippet__favorite {
+    color: #9AA1AC;
+}
+
+.PodcastSnippet--android .PodcastSnippet__name {
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
@@ -47,7 +52,22 @@
     margin: 12px 40px 4px 12px;
 }
 
-.PodcastSnippet__sub {
+.PodcastSnippet--ios .PodcastSnippet__name {
+    font-family: SF Pro Text;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    /* or 129% */
+
+    letter-spacing: -0.154px;
+
+    color: #FFFFFF;
+
+    margin: 10px 40px 4px 12px;
+}
+
+.PodcastSnippet--android .PodcastSnippet__sub {
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -60,4 +80,46 @@
     color: #909498;
 
     margin: 0px 40px 10px 12px;
+}
+
+.PodcastSnippet--ios .PodcastSnippet__sub {
+    font-family: SF Pro Text;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    /* identical to box height, or 117% */
+
+
+    color: #909498;
+
+    margin: 0px 40px 10px 12px;
+}
+
+.PodcastSnippet__info .Progress {
+    position: absolute;
+    left: 48px;
+    right: 67px;
+    bottom: 23px;
+    background: #fff;
+    background: #5C5D5F;
+    border-radius: 1px;
+    height: 2px;
+}
+
+.PodcastSnippet__duration {
+    position: absolute;
+    right: 12px;
+    bottom: 17px;
+
+    /* SF Caption 2 Regular */
+    font-family: SF Pro Text;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    /* identical to box height, or 117% */
+
+
+    color: #909498;
 }

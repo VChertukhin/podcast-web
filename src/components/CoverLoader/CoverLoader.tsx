@@ -12,11 +12,8 @@ import {
   Tappable,
   HasPlatform,
   withPlatform,
-  ANDROID,
-  IOS,
 } from '@vkontakte/vkui';
 import type { HasRootRef, HasRef } from '@vkontakte/vkui/dist/types';
-import { Icon24Cancel, Icon24DismissOverlay } from '@vkontakte/icons';
 
 export interface CoverLoaderProps
   extends InputHTMLAttributes<HTMLInputElement>,
