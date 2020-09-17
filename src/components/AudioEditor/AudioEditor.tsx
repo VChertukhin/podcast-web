@@ -19,21 +19,30 @@ import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from './plugins/timeline';
 import RegionsPlugin from './plugins/regions';
+import {
+  createAudioCtx,
+  createAudioBufferFromFile,
+  audioBufferSlice,
+  concatAudioBuffers,
+} from './audioUtils';
 
 interface IAudioEditorProps {
   podcast: Podcast;
 }
 
-const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
+/* eslint-disable */
+
+const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEditorProps) => {
   const { audioFile } = podcast;
   const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
   const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
   const [didMount, setDidMount] = useState<boolean>(false);
-  const [, setSelectionRegion] = useState<any>(null);
+  const [selectionRegion, setSelectionRegion] = useState<any>(null);
   // eslint-disable-next-line
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
   useEffect(() => {
     if (!didMount) {
+
       const wavesurfer = WaveSurfer.create({
         barWidth: 2,
         barRadius: 2,
@@ -117,7 +126,33 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
         wavesurfer.pause();
       }
     };
-  }, [shouldMusicPlay]);
+  }, [shouldMusicPlay, wavesurfer]);
+
+  const cutAudio = () => {
+    if (selectionRegion && wavesurfer) {
+      setIsBlobLoading(true);
+      // get region positions and remove it
+      const start: number = selectionRegion.start;
+      const end: number = selectionRegion.end;
+      selectionRegion.remove();
+      setSelectionRegion(null);
+      // create audio context
+      const ctx = createAudioCtx();
+        createAudioBufferFromFile(
+          audioFile!,
+          ctx,
+          (buffer) => {
+            // slice buffer
+            const sllicedBuffer = audioBufferSlice(ctx, buffer, start, end)
+            // set buffer
+            wavesurfer.backend.load(sllicedBuffer);
+            wavesurfer.drawBuffer();
+            wavesurfer.isReady = true;
+            wavesurfer.fireEvent('ready');
+          },
+        );
+    }
+  }
 
   return (
     <Group separator="hide">
@@ -154,6 +189,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
                   <Button
                     style={{ width: 44, marginRight: 4 }}
                     before={<Icon24Cut />}
+                    onClick={cutAudio}
                     size="l"
                     mode="secondary"
                   />
