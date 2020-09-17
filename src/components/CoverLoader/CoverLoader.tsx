@@ -53,7 +53,7 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
 
   change = (input: ChangeEvent<HTMLInputElement>) => {
     if (input.target.files && input.target.files[0]) {
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target && typeof e.target.result === 'string') {
           this.setState({ value: e.target.result });

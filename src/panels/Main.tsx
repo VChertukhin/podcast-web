@@ -12,8 +12,6 @@ import {
   Icon56AddCircleOutline,
 } from '@vkontakte/icons';
 
-interface MainState {}
-
 export interface MainProps {
   // setView: (view: string, name?: string) => void;
   setPanel: (name: string) => void;
@@ -22,7 +20,7 @@ export interface MainProps {
   podcastDone: boolean;
 }
 
-export class Main extends React.Component<MainProps, MainState> {
+export class Main extends React.Component<MainProps> {
   constructor(props: MainProps) {
     super(props);
 

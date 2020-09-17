@@ -6,7 +6,6 @@ import {
   Caption,
   Div,
   List,
-  Link,
   Cell,
   Input,
   platform,
@@ -34,17 +33,14 @@ const MaskedInput = IMaskMixin<MaskedInputProps>(({ inputRef, ...props }) => (
   />
 ));
 
-export interface TimeCodeEditorState {}
+// export interface TimeCodeEditorState {}
 
 export interface TimeCodeEditorProps {
   podcast: Podcast;
   updatePodcast: (p: Podcast) => void;
 }
 
-export class TimeCodeEditor extends React.Component<
-  TimeCodeEditorProps,
-  TimeCodeEditorState
-> {
+export class TimeCodeEditor extends React.Component<TimeCodeEditorProps> {
   constructor(props: TimeCodeEditorProps) {
     super(props);
 
@@ -134,7 +130,7 @@ export class TimeCodeEditor extends React.Component<
                     },
                   }}
                   value={timeFormat(timeCode.time)}
-                  onAccept={(value, mask) => {
+                  onAccept={(value) => {
                     this.setPodcastTimeCodeTime(index, value);
                   }}
                   onBlur={() => {

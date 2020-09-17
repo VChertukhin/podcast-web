@@ -1,21 +1,7 @@
 import React from 'react';
-import {
-  Button,
-  Div,
-  FixedLayout,
-  PanelHeader,
-  PanelHeaderBack,
-  Separator,
-  Text,
-  Header,
-  Card,
-  Link,
-  Group,
-} from '@vkontakte/vkui';
-import { Icon16Play } from '@vkontakte/icons';
+import { PanelHeader, PanelHeaderBack } from '@vkontakte/vkui';
 import type { Podcast } from '../types';
 import AudioEditor from '../components/AudioEditor';
-import { timeFormat } from '../lib';
 import TimeCodeEditor from '../components/TimeCodeEditor/TimeCodeEditor';
 
 interface EditState {
@@ -43,11 +29,6 @@ export class Edit extends React.Component<EditProps, EditState> {
 
     this.setPodcast = this.setPodcast.bind(this);
   }
-
-  isValid = () => {
-    const { podcast } = this.state;
-    return [podcast.image, podcast.name, podcast.description].every((e) => e);
-  };
 
   setPodcast = (podcast: Partial<Podcast>): void => {
     const newPodcast = Object.assign({}, this.state.podcast, podcast);

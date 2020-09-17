@@ -16,14 +16,10 @@ import {
   Caption,
   ActionSheet,
   ActionSheetItem,
-  IOS,
-  platform,
 } from '@vkontakte/vkui';
 import {
   Icon24Chevron,
-  Icon28CameraOutline,
   Icon28PodcastOutline,
-  Icon28Profile,
   Icon56GalleryOutline,
 } from '@vkontakte/icons';
 import { descriptionPodcastAccess, namePodcastAccess, Podcast } from '../types';
@@ -31,7 +27,6 @@ import CoverLoader from '../components/CoverLoader/CoverLoader';
 import { timeFormat } from '../lib';
 
 interface CreatingState {
-  highlightErrors: boolean;
   podcast: Podcast;
 }
 
@@ -50,7 +45,6 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
     super(props);
 
     this.state = {
-      highlightErrors: false,
       podcast: props.podcast,
     };
 
@@ -77,7 +71,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
     if (input.target.files && input.target.files[0]) {
       const originalAudioName = input.target.files[0].name;
 
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = (e) => {
         const audio = document.createElement('audio');
         if (e.target && typeof e.target.result === 'string') {
@@ -131,7 +125,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
 
   render(): JSX.Element {
     const { setPanel, goBack, updatePodcast } = this.props;
-    const { highlightErrors, podcast } = this.state;
+    const { podcast } = this.state;
 
     return (
       <>
@@ -147,12 +141,6 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             />
             <Input
               top="Название"
-              bottom={
-                highlightErrors && !podcast.name
-                  ? 'Пожалуйста, введите название подкаста'
-                  : ''
-              }
-              status={highlightErrors && !podcast.name ? 'error' : 'default'}
               placeholder="Введите название подкаста"
               value={podcast.name}
               onChange={(e) => this.setPodcast({ name: e.target.value })}
@@ -160,14 +148,6 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
           </FormLayout>
           <Textarea
             top="Описание подкаста"
-            bottom={
-              highlightErrors && !podcast.description
-                ? 'Пожалуйста, введите описание'
-                : ''
-            }
-            status={
-              highlightErrors && !podcast.description ? 'error' : 'default'
-            }
             placeholder=""
             value={podcast.description}
             onChange={(e) => this.setPodcast({ description: e.target.value })}
@@ -289,7 +269,6 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
                 updatePodcast(podcast);
                 setPanel('preview');
               }}
-              onBlur={() => this.setState({ highlightErrors: false })}
             >
               Далее
             </Button>

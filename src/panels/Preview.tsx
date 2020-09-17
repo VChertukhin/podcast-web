@@ -5,7 +5,6 @@ import {
   FixedLayout,
   PanelHeader,
   PanelHeaderBack,
-  Separator,
   Text,
   Header,
   Card,
@@ -17,7 +16,6 @@ import {
 import { Icon16Play } from '@vkontakte/icons';
 import type { Podcast } from '../types';
 import { timeFormat } from '../lib';
-import type { GroupInfo } from '@vkontakte/vk-bridge';
 import PodcastSnippet from '../components/PodcastSnippet/PodcastSnippet';
 
 interface PreviewState {

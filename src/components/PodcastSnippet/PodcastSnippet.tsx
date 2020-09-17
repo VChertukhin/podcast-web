@@ -1,30 +1,14 @@
 import React from 'react';
-import {
-  Group,
-  Header,
-  CellButton,
-  Caption,
-  Div,
-  List,
-  Link,
-  Cell,
-  Input,
-  Button,
-} from '@vkontakte/vkui';
-import type { Podcast, TimeCode } from '../../types';
-import { Icon16Play, Icon24Add, Icon24FavoriteOutline } from '@vkontakte/icons';
+import { Button } from '@vkontakte/vkui';
+import type { Podcast } from '../../types';
+import { Icon16Play, Icon24FavoriteOutline } from '@vkontakte/icons';
 import { timeFormat } from '../../lib';
-
-export interface PodcastSnippetState {}
 
 export interface PodcastSnippetProps {
   podcast: Podcast;
 }
 
-export class PodcastSnippet extends React.Component<
-  PodcastSnippetProps,
-  PodcastSnippetState
-> {
+export class PodcastSnippet extends React.Component<PodcastSnippetProps> {
   constructor(props: PodcastSnippetProps) {
     super(props);
 

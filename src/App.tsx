@@ -149,12 +149,10 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   render(): JSX.Element {
-    const { vkAPI } = this.props;
     const {
       activeView,
       activePanel,
       popout,
-      groupInfo,
       podcast,
       podcastDone,
     } = this.state;

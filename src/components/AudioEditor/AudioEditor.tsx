@@ -1,9 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Div,
   Button,
   Group,
-  Header,
   Card,
   CardGrid,
   Separator,
@@ -31,7 +29,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
   const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
   const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
   const [didMount, setDidMount] = useState<boolean>(false);
-  const [selecrionRegion, setSelectionRegion] = useState<any>(null);
+  const [, setSelectionRegion] = useState<any>(null);
   // eslint-disable-next-line
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
   useEffect(() => {
