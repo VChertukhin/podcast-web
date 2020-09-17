@@ -1,0 +1,45 @@
+.CoverLoader {
+    height: 72px;
+    width: 72px;
+    
+    border: 1px solid var(--field_border);
+    background-color: var(--field_background);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    margin: 0 auto;
+    padding: 0;
+    cursor: default;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: var(--accent);
+}
+
+.CoverLoader--android {
+    border-radius: 8px;
+
+}
+
+.CoverLoader--load {
+    border: none;
+}
+
+.CoverLoader__input {
+    display: none;
+}
+
+.CoverLoader__in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.CoverLoader--load .CoverLoader__in {
+    display: none;
+}
