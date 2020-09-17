@@ -60,3 +60,25 @@ export const descriptionPodcastAccess: {
   all:
     'При публикации записи с эпизодом, он становится доступным для всех пользователей',
 };
+
+export interface Audio {
+  id: number;
+  title: string;
+  artist: string;
+  duration: number;
+  photoURL: string;
+  audioURL: string;
+}
+
+export const audios: Audio[] = [
+  {
+    id: 1,
+    title: 'Гимн ВКонтакте',
+    artist: 'Слава Мук',
+    duration: 140,
+    photoURL:
+      'https://memepedia.ru/wp-content/uploads/2019/01/neskvik-s-pivom-mem.jpg',
+    audioURL:
+      'https://vk.com/doc-34974297_50719342?hash=59b2fbeed30dbeea7a&dl=fba400c7205ff10484',
+  },
+];

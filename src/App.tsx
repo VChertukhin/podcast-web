@@ -8,10 +8,11 @@ import type {
 } from '@vkontakte/vk-bridge';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import { Main } from './panels/Main';
-import { defaultPodcast, Podcast } from './types';
+import { defaultPodcast, Podcast, Audio } from './types';
 import { Creating } from './panels/Creating';
 import { Preview } from './panels/Preview';
 import { Edit } from './panels/Edit';
+import { MusicChoose } from './panels/MusicChoose';
 
 interface AppState {
   scheme: AppearanceSchemeType;
@@ -26,6 +27,8 @@ interface AppState {
   podcast: Podcast;
   audio?: MediaElementAudioSourceNode;
   podcastDone: boolean;
+
+  chosenMusic?: Audio;
 }
 
 export interface AppProps {
@@ -183,7 +186,15 @@ export class App extends React.Component<AppProps, AppState> {
               }}
             />
           </Panel>
-          <Panel id="music-chose"></Panel>
+          <Panel id="music-choose">
+            <MusicChoose
+              choseAudio={(audio: Audio) => {
+                this.setState({ chosenMusic: audio });
+                this.goBack();
+              }}
+              goBack={this.goBack}
+            />
+          </Panel>
           <Panel id="preview">
             <Preview
               setPanel={this.setPanel}
