@@ -138,21 +138,25 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
       setSelectionRegion(null);
       // create audio context
       const ctx = createAudioCtx();
-        createAudioBufferFromFile(
-          audioFile!,
-          ctx,
-          (buffer) => {
-            // slice buffer
-            const sllicedBuffer = audioBufferSlice(ctx, buffer, start, end)
-            // set buffer
-            wavesurfer.backend.load(sllicedBuffer);
-            wavesurfer.drawBuffer();
-            wavesurfer.isReady = true;
-            wavesurfer.fireEvent('ready');
-          },
-        );
+      createAudioBufferFromFile(
+        audioFile!,
+        ctx,
+        (buffer) => {
+          // slice buffer
+          const sllicedBuffer = audioBufferSlice(ctx, buffer, start, end)
+          // set buffer
+          wavesurfer.backend.load(sllicedBuffer);
+          wavesurfer.drawBuffer();
+          wavesurfer.isReady = true;
+          wavesurfer.fireEvent('ready');
+        },
+      );
     }
   }
+
+  const loadText = wavesurfer
+    ? 'Обрезаем...'
+    : 'Подготовка редактора (пара секунд)...';
 
   return (
     <Group separator="hide">
@@ -173,8 +177,8 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
 
           <div style={{ padding: 8 }}>
             {isBlobLoading && (
-              <Text weight="regular" style={{ textAlign: 'center' }}>
-                Подготовка редактора (пара секунд)...
+              <Text weight="regular" style={{ textAlign: 'center', height: 44 }}>
+                {loadText}
               </Text>
             )}
             {!isBlobLoading && (
