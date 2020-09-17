@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
 
 export const createAudioCtx = () => {
 	const AudioCtxClass = (
@@ -69,32 +68,37 @@ export const audioBufferSlice = (
 }
 
 export const concatAudioBuffers = (audioCtx: AudioContext, buffers: AudioBuffer[]): AudioBuffer => {
+	const channels = buffers[0].numberOfChannels;
 	let output = audioCtx.createBuffer(
-		1,
+		channels,
 		buffers.map(buffer => buffer.length).reduce((a, b) => a + b, 0),
 		buffers[0].sampleRate,
 	)
 
-	let offset = 0;
-
-	buffers.map(buffer => {
-		output.getChannelData(0).set(buffer.getChannelData(0), offset);
-		offset += buffer.length;
-	});
+	for (let channel = 0; channel < channels; channel++) {
+		let offset = 0;
+		buffers.map(buffer => {
+			output.getChannelData(channel).set(buffer.getChannelData(channel), offset);
+			offset += buffer.length;
+		});
+	}
 	return output;
 }
 
 export const layerAudioBuffers = (audioCtx: AudioContext, buffers: AudioBuffer[]): AudioBuffer => {
+	const channels = buffers[0].numberOfChannels;
 	let output = audioCtx.createBuffer(
-		1,
+		channels,
 		buffers.map(buffer => buffer.length).reduce((a, b) => a + b, 0),
 		buffers[0].sampleRate,
 	);
 
-	buffers.map(buffer => {
-		for (let i = buffer.getChannelData(0).length - 1; i >= 0; i--) {
-			output.getChannelData(0)[i] += buffer.getChannelData(0)[i];
-		}
-	});
+	for (let channel = 0; channel < channels; channel++) {
+		buffers.map(buffer => {
+			for (let i = buffer.getChannelData(channel).length - 1; i >= 0; i--) {
+				output.getChannelData(channel)[i] += buffer.getChannelData(channel)[i];
+			}
+		});
+	}
 	return output;
 }
