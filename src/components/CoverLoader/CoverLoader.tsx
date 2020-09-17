@@ -110,10 +110,11 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
               CoverLoader__error: error,
             },
           )}
-          style={{ ...style, backgroundImage: `url(${value})` }}
+          style={{ ...style }}
           getRootRef={getRootRef}
           Component="label"
         >
+          <div className="CoverLoader__background" style={{ backgroundImage: `url(${value})` }}/>
           <input
             {...restProps}
             className="CoverLoader__input"

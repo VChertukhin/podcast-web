@@ -14,11 +14,24 @@
     margin: 0 auto;
     padding: 0;
     cursor: default;
-    background-size: cover;
-    background-position: center;
     position: relative;
     color: var(--accent);
+    overflow: hidden;
 }
+
+.CoverLoader__background {
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.CoverLoader.Tappable--active {
+    opacity: .4;
+  }
 
 .CoverLoader--android {
     border-radius: 8px;
