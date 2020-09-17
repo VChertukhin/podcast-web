@@ -21,7 +21,7 @@
     "@vkontakte/vk-tunnel": "^0.0.15",
     "install": "^0.13.0",
     "prettier": "^2.0.5",
-    "snowpack": "^2.10.0",
+    "snowpack": "^2.11.1",
     "typescript": "^4.0.2"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-imask": "^6.0.5",
+    "svg-baker-runtime": "1.4.6",
     "wavesurfer.js": "^4.0.1"
   },
   "browserslist": ">0.75%, not ie 11, not UCAndroid >0, not OperaMini all"

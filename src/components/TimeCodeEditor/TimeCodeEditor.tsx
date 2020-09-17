@@ -9,6 +9,7 @@ import {
   Link,
   Cell,
   Input,
+   platform, IOS
 } from '@vkontakte/vkui';
 import type { Podcast, TimeCode } from '../../types';
 import { Icon24Add } from '@vkontakte/icons';
@@ -17,6 +18,7 @@ import { IMaskMixin } from 'react-imask';
 import type { IMaskMixinProps } from 'react-imask';
 import IMask from 'imask';
 import type { InputProps } from '@vkontakte/vkui/dist/components/Input/Input';
+import Icon24AddCircle from '../icons/Icon24AddCircle';
 
 const sortingTimeCode = (a: TimeCode, b: TimeCode) => {
   return a.time - b.time;
@@ -152,7 +154,7 @@ export class TimeCodeEditor extends React.Component<
             </Cell>
           ))}
         </List>
-        <CellButton before={<Icon24Add />} onClick={this.addPodcastTimeCode}>
+        <CellButton before={platform()===IOS?<Icon24AddCircle/>:<Icon24Add />} onClick={this.addPodcastTimeCode}>
           Добавить таймкод
         </CellButton>
         <Div>
