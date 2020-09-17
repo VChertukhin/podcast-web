@@ -2,7 +2,11 @@
 import React, { useState, useEffect } from 'react';
 
 export const createAudioCtx = () => {
-	const AudioCtxClass = (window.AudioContext || window.webkitAudioContext);
+	const AudioCtxClass = (
+		window.AudioContext ||
+		window.webkitAudioContext ||
+		window.mozAudioContext
+	);
 	const audioCtx = new AudioCtxClass();
 	return audioCtx;
 }
@@ -66,4 +70,35 @@ export const audioBufferSlice = (
 	}
 
 	callback(newArrayBuffer, error);
+}
+
+export const concatAudioBuffers = (audioCtx: AudioContext, buffers: AudioBuffer[]): AudioBuffer => {
+	let output = audioCtx.createBuffer(
+		1,
+		buffers.map(buffer => buffer.length).reduce((a, b) => a + b, 0),
+		buffers[0].sampleRate,
+	)
+
+	let offset = 0;
+
+	buffers.map(buffer => {
+		output.getChannelData(0).set(buffer.getChannelData(0), offset);
+		offset += buffer.length;
+	});
+	return output;
+}
+
+export const layerAudioBuffers = (audioCtx: AudioContext, buffers: AudioBuffer[]): AudioBuffer => {
+	let output = audioCtx.createBuffer(
+		1,
+		buffers.map(buffer => buffer.length).reduce((a, b) => a + b, 0),
+		buffers[0].sampleRate,
+	);
+
+	buffers.map(buffer => {
+		for (let i = buffer.getChannelData(0).length - 1; i >= 0; i--) {
+			output.getChannelData(0)[i] += buffer.getChannelData(0)[i];
+		}
+	});
+	return output;
 }
