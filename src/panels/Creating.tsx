@@ -55,7 +55,7 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
     };
 
     this.openAccess = this.openAccess.bind(this);
-    this.change = this.change.bind(this)
+    this.change = this.change.bind(this);
   }
 
   get isValid() {
@@ -87,7 +87,11 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
           };
           const context = new window.AudioContext();
           const source = context.createMediaElementSource(audio);
-          this.setPodcast({ audioComponent: audio, audioSource: source, originalAudioName: originalAudioName });
+          this.setPodcast({
+            audioComponent: audio,
+            audioSource: source,
+            originalAudioName: originalAudioName,
+          });
         }
       };
 
@@ -211,24 +215,24 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
             </Div>
           </>
         ) : (
-            <Placeholder
-              header="Загрузите ваш подкаст"
-              action={
-                <File
-                  controlSize="m"
-                  mode="outline"
-                  accept="audio/*"
-                  onChange={this.change}
-                >
-                  Загрузить файл
+          <Placeholder
+            header="Загрузите ваш подкаст"
+            action={
+              <File
+                controlSize="m"
+                mode="outline"
+                accept="audio/*"
+                onChange={this.change}
+              >
+                Загрузить файл
               </File>
-              }
-            >
-              Выберите готовый аудиофайл из
-              <br />
+            }
+          >
+            Выберите готовый аудиофайл из
+            <br />
             вашего телефона и добавьте его
-            </Placeholder>
-          )}
+          </Placeholder>
+        )}
         <Separator />
         <FormLayout>
           <Checkbox

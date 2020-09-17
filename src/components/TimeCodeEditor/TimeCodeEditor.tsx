@@ -9,7 +9,8 @@ import {
   Link,
   Cell,
   Input,
-   platform, IOS
+  platform,
+  IOS,
 } from '@vkontakte/vkui';
 import type { Podcast, TimeCode } from '../../types';
 import { Icon24Add } from '@vkontakte/icons';
@@ -154,11 +155,18 @@ export class TimeCodeEditor extends React.Component<
             </Cell>
           ))}
         </List>
-        <CellButton before={platform()===IOS?<Icon24AddCircle/>:<Icon24Add />} onClick={this.addPodcastTimeCode}>
+        <CellButton
+          before={platform() === IOS ? <Icon24AddCircle /> : <Icon24Add />}
+          onClick={this.addPodcastTimeCode}
+        >
           Добавить таймкод
         </CellButton>
         <Div>
-          <Caption weight="regular" level="1" style={{ color: 'var(--text_secondary)' }}>
+          <Caption
+            weight="regular"
+            level="1"
+            style={{ color: 'var(--text_secondary)' }}
+          >
             Отметки времени с названием темы. Позволяют слушателям легче
             путешествовать по подкасту.
           </Caption>
