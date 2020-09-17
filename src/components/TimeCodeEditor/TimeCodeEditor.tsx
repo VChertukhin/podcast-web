@@ -156,7 +156,7 @@ export class TimeCodeEditor extends React.Component<
           Добавить таймкод
         </CellButton>
         <Div>
-          <Caption weight="regular" level="1" style={{ color: 'var(--text_name)' }}>
+          <Caption weight="regular" level="1" style={{ color: 'var(--text_secondary)' }}>
             Отметки времени с названием темы. Позволяют слушателям легче
             путешествовать по подкасту.
           </Caption>
