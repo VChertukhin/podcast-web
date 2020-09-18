@@ -18,7 +18,7 @@ import { IMaskMixin } from 'react-imask';
 import type { IMaskMixinProps } from 'react-imask';
 import IMask from 'imask';
 import type { InputProps } from '@vkontakte/vkui/dist/components/Input/Input';
-import Icon24AddCircle from '../icons/Icon24AddCircle';
+import { Icon24AddCircle } from '../icons';
 
 const sortingTimeCode = (a: TimeCode, b: TimeCode) => {
   return a.time - b.time;
@@ -27,13 +27,8 @@ const sortingTimeCode = (a: TimeCode, b: TimeCode) => {
 interface MaskedInputProps extends InputProps, IMaskMixinProps {}
 
 const MaskedInput = IMaskMixin<MaskedInputProps>(({ inputRef, ...props }) => (
-  <Input
-    {...props}
-    getRef={inputRef} // bind internal input (if you use styled-components V4, use "ref" instead "innerRef")
-  />
+  <Input {...props} getRef={inputRef} />
 ));
-
-// export interface TimeCodeEditorState {}
 
 export interface TimeCodeEditorProps {
   podcast: Podcast;
@@ -135,18 +130,8 @@ export class TimeCodeEditor extends React.Component<TimeCodeEditorProps> {
                   }}
                   onBlur={() => {
                     this.sortPodcast();
-                    // this.setPodcastTimeCodeTime(
-                    //   index,
-                    //   timeFormat(timeCode.time),
-                    // );
                   }}
                 />
-                {/* <Input
-                  defaultValue={timeFormat(timeCode.time)}
-                  onChange={(e) =>
-                    this.setPodcastTimeCodeTime(index, e.target.value)
-                  }
-                /> */}
               </div>
             </Cell>
           ))}

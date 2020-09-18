@@ -2,9 +2,7 @@ import React from 'react';
 import { Panel, Root, View } from '@vkontakte/vkui';
 import type {
   AppearanceSchemeType,
-  GroupInfo,
   UpdateConfigData,
-  UserInfo,
 } from '@vkontakte/vk-bridge';
 import type { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import { Main } from './panels/Main';
@@ -21,9 +19,6 @@ interface AppState {
   popout?: React.ReactNode;
   history: Array<{ view: string; panel: string }>;
 
-  userInfo: UserInfo;
-  groupInfo: GroupInfo;
-
   podcast: Podcast;
   audio?: MediaElementAudioSourceNode;
   podcastDone: boolean;
@@ -33,7 +28,6 @@ interface AppState {
 
 export interface AppProps {
   vkAPI: VKMiniAppAPI;
-  mobile: boolean;
 }
 
 export class App extends React.Component<AppProps, AppState> {
@@ -47,36 +41,6 @@ export class App extends React.Component<AppProps, AppState> {
       popout: null,
       history: [{ view: 'main', panel: 'main' }],
 
-      userInfo: {
-        id: 117253521,
-        first_name: 'Даниил',
-        last_name: 'Суворов',
-        sex: 2,
-        city: {
-          id: 22,
-          title: 'Архангельск',
-        },
-        country: {
-          id: 1,
-          title: 'Россия',
-        },
-        timezone: 3,
-        photo_100: 'https://sun9-8.us...M1CV8SrIA&ava=1',
-        photo_200: 'https://sun9-8.us...eMXx9VGsc&ava=1',
-      },
-      groupInfo: {
-        id: 76982440,
-        name: '«Медуза»',
-        screen_name: 'meduzaproject',
-        is_closed: 0,
-        type: 'page',
-        is_member: 1,
-        description: 'Все, что вам нужно от новостей.',
-        photo_50: 'https://sun9-10.u...grqzJFw18&ava=1',
-        photo_100: 'https://sun9-10.u...3y9Rgqq-o&ava=1',
-        photo_200: 'https://sun9-10.u...76tdsKND4&ava=1',
-      },
-
       podcast: defaultPodcast,
       podcastDone: false,
     };
@@ -89,10 +53,6 @@ export class App extends React.Component<AppProps, AppState> {
 
   componentDidMount(): void {
     const { vkAPI } = this.props;
-
-    vkAPI.getUserInfo().then((user) => {
-      this.setState({ userInfo: user });
-    });
 
     vkAPI.onUpdateConfig((data: UpdateConfigData) => {
       const schemeAttribute = document.createAttribute('scheme');

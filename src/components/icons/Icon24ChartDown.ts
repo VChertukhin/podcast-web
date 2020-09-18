@@ -25,13 +25,13 @@ function mountIcon() {
     isMounted = true;
   }
 }
-export interface Icon24AddCircleProps extends HTMLAttributes<HTMLDivElement> {
+export interface Icon24ChartDownProps extends HTMLAttributes<HTMLDivElement> {
   fill?: string;
   width?: number;
   height?: number;
   getRootRef?: RefCallback<HTMLDivElement> | RefObject<HTMLDivElement>;
 }
-const Icon24AddCircle: FC<Icon24AddCircleProps> = (props) => {
+const Icon24ChartDown: FC<Icon24ChartDownProps> = (props) => {
   useIsomorphicLayoutEffect(() => {
     mountIcon();
   }, []);
@@ -45,5 +45,5 @@ const Icon24AddCircle: FC<Icon24AddCircleProps> = (props) => {
     }),
   );
 };
-(Icon24AddCircle as any).mountIcon = mountIcon;
-export default Icon24AddCircle;
+(Icon24ChartDown as any).mountIcon = mountIcon;
+export default Icon24ChartDown;
