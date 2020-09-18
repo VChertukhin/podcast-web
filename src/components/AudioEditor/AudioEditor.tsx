@@ -5,7 +5,7 @@ import {
   Card,
   CardGrid,
   Separator,
-  Text,
+  Spinner,
 } from '@vkontakte/vkui';
 import {
   Icon24Play,
@@ -23,9 +23,6 @@ import {
   createAudioCtx,
   createAudioBufferFromFile,
   audioBufferSlice,
-  concatAudioBuffers,
-  createAudioFromStory,
-  StoryPiece,
 } from './audioUtils';
 
 interface IAudioEditorProps {
@@ -159,6 +156,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
   }, [shouldMusicPlay, wavesurfer]);
 
   const cutAudio = () => {
+    console.log('wefwfewef cut cut cut')
     if (selectionRegion && wavesurfer) {
       setIsBlobLoading(true);
       // get region positions and remove it
@@ -200,10 +198,6 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
 
     }
   }
-  console.log('story', editStory)
-  const loadText = wavesurfer
-    ? 'Обрезаем...'
-    : 'Подготовка редактора (пара секунд)...';
 
   const editStyles = isEditable
     ? {}
@@ -231,9 +225,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
 
           <div style={{ padding: 8 }}>
             {isBlobLoading && (
-              <Text weight="regular" style={{ textAlign: 'center', height: 44 }}>
-                {loadText}
-              </Text>
+              <Spinner size="medium" style={{ minHeight: 44 }} />
             )}
             {!isBlobLoading && (
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
