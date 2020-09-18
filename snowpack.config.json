@@ -17,7 +17,7 @@
     [
       "@snowpack/plugin-webpack",
       {
-        "sourceMap": false,
+        "sourceMap": true,
         "manifest": true
       }
     ]
