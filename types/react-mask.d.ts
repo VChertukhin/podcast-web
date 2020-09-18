@@ -1,5 +1,3 @@
-// import IMask from 'imask';
-
 declare module 'react-imask' {
   type RefWithCurrent<T> = {
     current: T | null;
