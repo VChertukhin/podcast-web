@@ -5,7 +5,7 @@ import {
   Card,
   CardGrid,
   Separator,
-  Text,
+  Spinner,
 } from '@vkontakte/vkui';
 import {
   Icon24Play,
@@ -19,21 +19,33 @@ import type { Podcast } from '../../types';
 import WaveSurfer from 'wavesurfer.js';
 import TimelinePlugin from './plugins/timeline';
 import RegionsPlugin from './plugins/regions';
+import {
+  createAudioCtx,
+  createAudioBufferFromFile,
+  audioBufferSlice,
+} from './audioUtils';
 
 interface IAudioEditorProps {
   podcast: Podcast;
 }
 
-const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
+/* eslint-disable */
+
+const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEditorProps) => {
   const { audioFile } = podcast;
+
   const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [currentBuffer, setCurrentBuffer] = useState<AudioBuffer | null>(null);
+  const [editStory, setEditStory] = useState<AudioBuffer[]>([]);
   const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
   const [didMount, setDidMount] = useState<boolean>(false);
-  const [, setSelectionRegion] = useState<any>(null);
+  const [selectionRegion, setSelectionRegion] = useState<any>(null);
   // eslint-disable-next-line
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
   useEffect(() => {
     if (!didMount) {
+
       const wavesurfer = WaveSurfer.create({
         barWidth: 2,
         barRadius: 2,
@@ -75,6 +87,18 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
         ],
       });
       wavesurfer.loadBlob(audioFile!);
+
+      // initial buffer
+      // create audio context
+      const ctx = createAudioCtx();
+      createAudioBufferFromFile(
+        audioFile!,
+        ctx,
+        (buffer) => {
+          setCurrentBuffer(buffer);
+        },
+      );
+
       wavesurfer.on('ready', () => {
         setIsBlobLoading(false);
       });
@@ -95,6 +119,18 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
                 width: '6px',
               },
             },
+          });
+          selectionReg.on('update-end', () => {
+            // make a desicion if we can edit audio
+            if (selectionRegion && wavesurfer) {
+              const selectedStart = selectionRegion.start === 0;
+              const selectedEnd = selectionRegion.end === wavesurfer?.getDuration();
+              if (selectedStart && selectedEnd && isEditable) {
+                setIsEditable(false);
+              }
+            } else if (!isEditable) {
+              setIsEditable(true);
+            }
           });
           setSelectionRegion(selectionReg);
         }
@@ -117,7 +153,58 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
         wavesurfer.pause();
       }
     };
-  }, [shouldMusicPlay]);
+  }, [shouldMusicPlay, wavesurfer]);
+
+  const cutAudio = () => {
+    console.log('wefwfewef cut cut cut')
+    if (selectionRegion && wavesurfer) {
+      setIsBlobLoading(true);
+      // get region positions and remove it
+      const start: number = selectionRegion.start;
+      const end: number = selectionRegion.end;
+      selectionRegion.remove();
+      setSelectionRegion(null);
+      setIsEditable(false);
+      // create audio context
+      const ctx = createAudioCtx();
+      createAudioBufferFromFile(
+        audioFile!,
+        ctx,
+        (buffer) => {
+          // slice buffer
+          const sllicedBuffer = audioBufferSlice(ctx, buffer, start, end);
+          // add history record
+          setEditStory([...editStory, currentBuffer]);
+          setCurrentBuffer(sllicedBuffer);
+          // load buffer to wavesurfer
+          wavesurfer.backend.load(sllicedBuffer);
+          wavesurfer.drawBuffer();
+          wavesurfer.isReady = true;
+          wavesurfer.fireEvent('ready');
+        },
+      );
+    }
+  }
+
+  const undoCutAudio = () => {
+    if (editStory.length > 0 && wavesurfer) {
+      const prevBuffer = editStory[editStory.length - 1];
+      wavesurfer.backend.load(prevBuffer);
+      wavesurfer.drawBuffer();
+      wavesurfer.isReady = true;
+      wavesurfer.fireEvent('ready');
+      // new story
+      setEditStory([...editStory.slice(0, editStory.length - 1)])
+
+    }
+  }
+
+  const editStyles = isEditable
+    ? {}
+    : { opacity: 0.5, pointerEvents: 'none' };
+  const storyStyles = editStory.length > 0
+    ? {}
+    : { opacity: 0.5, pointerEvents: 'none' };
 
   return (
     <Group separator="hide">
@@ -138,9 +225,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
 
           <div style={{ padding: 8 }}>
             {isBlobLoading && (
-              <Text weight="regular" style={{ textAlign: 'center' }}>
-                Подготовка редактора (пара секунд)...
-              </Text>
+              <Spinner size="medium" style={{ minHeight: 44 }} />
             )}
             {!isBlobLoading && (
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -152,14 +237,16 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }) => {
                 />
                 <div>
                   <Button
-                    style={{ width: 44, marginRight: 4 }}
+                    style={{ width: 44, marginRight: 4, ...editStyles }}
                     before={<Icon24Cut />}
+                    onClick={cutAudio}
                     size="l"
                     mode="secondary"
                   />
                   <Button
-                    style={{ width: 44 }}
+                    style={{ width: 44, ...storyStyles }}
                     before={<Icon24ArrowUturnLeftOutline />}
+                    onClick={undoCutAudio}
                     size="l"
                     mode="secondary"
                   />
