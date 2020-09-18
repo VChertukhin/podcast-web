@@ -24,6 +24,8 @@ import {
   createAudioBufferFromFile,
   audioBufferSlice,
   concatAudioBuffers,
+  createAudioFromStory,
+  StoryPiece,
 } from './audioUtils';
 
 interface IAudioEditorProps {
@@ -34,8 +36,11 @@ interface IAudioEditorProps {
 
 const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEditorProps) => {
   const { audioFile } = podcast;
+
   const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
   const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [currentBuffer, setCurrentBuffer] = useState<AudioBuffer | null>(null);
+  const [editStory, setEditStory] = useState<AudioBuffer[]>([]);
   const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
   const [didMount, setDidMount] = useState<boolean>(false);
   const [selectionRegion, setSelectionRegion] = useState<any>(null);
@@ -85,6 +90,18 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
         ],
       });
       wavesurfer.loadBlob(audioFile!);
+
+      // initial buffer
+      // create audio context
+      const ctx = createAudioCtx();
+      createAudioBufferFromFile(
+        audioFile!,
+        ctx,
+        (buffer) => {
+          setCurrentBuffer(buffer);
+        },
+      );
+
       wavesurfer.on('ready', () => {
         setIsBlobLoading(false);
       });
@@ -112,11 +129,9 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
               const selectedStart = selectionRegion.start === 0;
               const selectedEnd = selectionRegion.end === wavesurfer?.getDuration();
               if (selectedStart && selectedEnd && isEditable) {
-                console.log('CANT')
                 setIsEditable(false);
               }
             } else if (!isEditable) {
-              console.log('CAN')
               setIsEditable(true);
             }
           });
@@ -151,6 +166,7 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
       const end: number = selectionRegion.end;
       selectionRegion.remove();
       setSelectionRegion(null);
+      setIsEditable(false);
       // create audio context
       const ctx = createAudioCtx();
       createAudioBufferFromFile(
@@ -158,8 +174,11 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
         ctx,
         (buffer) => {
           // slice buffer
-          const sllicedBuffer = audioBufferSlice(ctx, buffer, start, end)
-          // set buffer
+          const sllicedBuffer = audioBufferSlice(ctx, buffer, start, end);
+          // add history record
+          setEditStory([...editStory, currentBuffer]);
+          setCurrentBuffer(sllicedBuffer);
+          // load buffer to wavesurfer
           wavesurfer.backend.load(sllicedBuffer);
           wavesurfer.drawBuffer();
           wavesurfer.isReady = true;
@@ -169,11 +188,27 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
     }
   }
 
+  const undoCutAudio = () => {
+    if (editStory.length > 0 && wavesurfer) {
+      const prevBuffer = editStory[editStory.length - 1];
+      wavesurfer.backend.load(prevBuffer);
+      wavesurfer.drawBuffer();
+      wavesurfer.isReady = true;
+      wavesurfer.fireEvent('ready');
+      // new story
+      setEditStory([...editStory.slice(0, editStory.length - 1)])
+
+    }
+  }
+  console.log('story', editStory)
   const loadText = wavesurfer
     ? 'Обрезаем...'
     : 'Подготовка редактора (пара секунд)...';
 
   const editStyles = isEditable
+    ? {}
+    : { opacity: 0.5, pointerEvents: 'none' };
+  const storyStyles = editStory.length > 0
     ? {}
     : { opacity: 0.5, pointerEvents: 'none' };
 
@@ -217,8 +252,9 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
                     mode="secondary"
                   />
                   <Button
-                    style={{ width: 44}}
+                    style={{ width: 44, ...storyStyles }}
                     before={<Icon24ArrowUturnLeftOutline />}
+                    onClick={undoCutAudio}
                     size="l"
                     mode="secondary"
                   />

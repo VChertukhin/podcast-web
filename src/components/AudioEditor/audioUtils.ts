@@ -67,6 +67,41 @@ export const audioBufferSlice = (
 	return newArrayBuffer as AudioBuffer;
 }
 
+export type StoryPiece = {
+	leftPart: AudioBuffer | null;
+	rigftPart: AudioBuffer | null;
+}
+
+export const createStoryForSlice = (
+	audioCtx: AudioContext,
+	buffer: AudioBuffer,
+	begin: number,
+	end: number,
+): [AudioBuffer, StoryPiece] => {
+	const sllicedBuffer = audioBufferSlice(audioCtx, buffer, begin, end);
+	const leftBuff = audioBufferSlice(audioCtx, buffer, 0, begin);
+	const rightBuff = audioBufferSlice(audioCtx, buffer, end, buffer.duration);
+	return [
+		sllicedBuffer,
+		{
+			leftPart: leftBuff,
+			rigftPart: rightBuff,
+		}
+	];
+}
+
+export const createAudioFromStory = (currBuffer: AudioBuffer, storyPiece: StoryPiece): AudioBuffer => {
+	let restoredBuffer: AudioBuffer;
+	let ctx = createAudioCtx();
+	if(storyPiece.leftPart) {
+		restoredBuffer = concatAudioBuffers(ctx, [storyPiece.leftPart, currBuffer]);
+	}
+	if (storyPiece.rigftPart) {
+		restoredBuffer = concatAudioBuffers(ctx, [currBuffer, storyPiece.rigftPart]);
+	}
+	return restoredBuffer!;
+}
+
 export const concatAudioBuffers = (audioCtx: AudioContext, buffers: AudioBuffer[]): AudioBuffer => {
 	const channels = buffers[0].numberOfChannels;
 	let output = audioCtx.createBuffer(
