@@ -1,10 +1,25 @@
-import React from 'react';
-import { Button } from '@vkontakte/vkui';
+import React, { HTMLAttributes } from 'react';
+import {
+  Button,
+  classNames,
+  getClassName,
+  HasPlatform,
+  IOS,
+  platform,
+  Progress,
+  withPlatform,
+} from '@vkontakte/vkui';
 import type { Podcast } from '../../types';
 import { Icon16Play, Icon24FavoriteOutline } from '@vkontakte/icons';
 import { timeFormat } from '../../lib';
+import { Icon24PlayCircle } from '../icons';
+import type { HasRef, HasRootRef } from '@vkontakte/vkui/dist/types';
 
-export interface PodcastSnippetProps {
+export interface PodcastSnippetProps
+  extends HTMLAttributes<HTMLDivElement>,
+    HasRef<HTMLInputElement>,
+    HasRootRef<HTMLElement>,
+    HasPlatform {
   podcast: Podcast;
 }
 
@@ -16,11 +31,16 @@ export class PodcastSnippet extends React.Component<PodcastSnippetProps> {
   }
 
   render(): JSX.Element {
-    const { podcast } = this.props;
-    // const {  } = this.state;
+    const { podcast, platform, className, ...restProps } = this.props;
 
     return (
-      <div className="PodcastSnippet">
+      <div
+        className={classNames(
+          getClassName('PodcastSnippet', platform),
+          className,
+        )}
+        {...restProps}
+      >
         <div
           className="PodcastSnippet__cover"
           style={{ backgroundImage: `url(${podcast.image})` }}
@@ -33,13 +53,21 @@ export class PodcastSnippet extends React.Component<PodcastSnippetProps> {
           <div className="PodcastSnippet__sub">
             {podcast.author} · {timeFormat(podcast.originalDuration)}
           </div>
-          <Button before={<Icon16Play />} size="m" mode="overlay_primary">
-            СЛУШАТЬ
-          </Button>
+          {platform === IOS ? (
+            <div>
+              <Icon24PlayCircle fill="#fff" />
+              <Progress value={0} />
+              <div className="PodcastSnippet__duration">-00:00</div>
+            </div>
+          ) : (
+            <Button before={<Icon16Play />} size="m" mode="overlay_primary">
+              СЛУШАТЬ
+            </Button>
+          )}
         </div>
       </div>
     );
   }
 }
 
-export default PodcastSnippet;
+export default withPlatform(PodcastSnippet);

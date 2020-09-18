@@ -155,21 +155,30 @@ export class Creating extends React.Component<CreatingProps, CreatingState> {
         </FormLayout>
         {podcast.audioSource ? (
           <>
-            <SimpleCell
-              disabled
-              before={
-                <div className="PodcastIcon">
-                  <Icon28PodcastOutline />
-                </div>
-              }
-              after={
-                <div style={{ color: 'var(--text_secondary)' }}>
-                  {timeFormat(podcast.originalDuration)}
-                </div>
-              }
-            >
-              {podcast.originalAudioName}
-            </SimpleCell>
+            <label>
+              <SimpleCell
+                style={{ cursor: 'pointer' }}
+                disabled
+                before={
+                  <div className="PodcastIcon">
+                    <Icon28PodcastOutline />
+                  </div>
+                }
+                after={
+                  <div style={{ color: 'var(--text_secondary)' }}>
+                    {timeFormat(podcast.originalDuration)}
+                  </div>
+                }
+              >
+                {podcast.originalAudioName}
+              </SimpleCell>
+              <input
+                className="LoadFile"
+                type="file"
+                accept="audio/*"
+                onChange={this.change}
+              />
+            </label>
             <Div>
               <Caption
                 level="1"

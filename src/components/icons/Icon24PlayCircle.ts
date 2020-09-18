@@ -9,9 +9,9 @@ import {
 import { SvgIcon } from '@vkontakte/icons/dist/SvgIcon.js';
 
 const viewBox = '0 0 24 24';
-const id = 'cut_24';
+const id = 'play_circle_24';
 const content =
-  '<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="cut_24"><path d="m6 9c1.6568 0 3-1.3432 3-3s-1.3432-3-3-3-3 1.3432-3 3 1.3432 3 3 3z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="m6 21c1.6568 0 3-1.3431 3-3s-1.3432-3-3-3-3 1.3431-3 3 1.3432 3 3 3z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M20 4L8.12 15.88" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M14.47 14.48L20 20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M8.12 8.12L12 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>';
+  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="play_circle_24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24ZM17.6798 11.465L9.3589 6.83254C9.26177 6.77847 9.15161 6.75 9.03949 6.75C8.68631 6.75 8.4 7.02646 8.4 7.36749V16.6324C8.4 16.7407 8.42948 16.847 8.48549 16.9408C8.66189 17.2363 9.05294 17.3377 9.3589 17.1674L17.6798 12.5349C17.7773 12.4806 17.8582 12.4025 17.9144 12.3084C18.0908 12.0129 17.9858 11.6353 17.6798 11.465Z" fill="currentColor"/></svg>';
 let isMounted = false;
 function mountIcon() {
   if (!isMounted) {
@@ -25,13 +25,13 @@ function mountIcon() {
     isMounted = true;
   }
 }
-export interface Icon24CutProps extends HTMLAttributes<HTMLDivElement> {
+export interface Icon24PlayCircleProps extends HTMLAttributes<HTMLDivElement> {
   fill?: string;
   width?: number;
   height?: number;
   getRootRef?: RefCallback<HTMLDivElement> | RefObject<HTMLDivElement>;
 }
-const Icon24Cut: FC<Icon24CutProps> = (props) => {
+const Icon24PlayCircle: FC<Icon24PlayCircleProps> = (props) => {
   useIsomorphicLayoutEffect(() => {
     mountIcon();
   }, []);
@@ -45,5 +45,5 @@ const Icon24Cut: FC<Icon24CutProps> = (props) => {
     }),
   );
 };
-(Icon24Cut as any).mountIcon = mountIcon;
-export default Icon24Cut;
+(Icon24PlayCircle as any).mountIcon = mountIcon;
+export default Icon24PlayCircle;

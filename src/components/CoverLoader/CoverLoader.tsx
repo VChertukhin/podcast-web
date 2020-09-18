@@ -6,37 +6,23 @@ import React, {
   MouseEventHandler,
 } from 'react';
 import {
-  Text,
   getClassName,
   classNames,
   Tappable,
   HasPlatform,
   withPlatform,
-  ANDROID,
-  IOS,
 } from '@vkontakte/vkui';
 import type { HasRootRef, HasRef } from '@vkontakte/vkui/dist/types';
-import { Icon24Cancel, Icon24DismissOverlay } from '@vkontakte/icons';
 
 export interface CoverLoaderProps
   extends InputHTMLAttributes<HTMLInputElement>,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement>,
     HasPlatform {
-  /**
-   * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
-   */
   onDismiss?: MouseEventHandler<HTMLDivElement>;
   onLoadImage?: (image: string) => void;
-  /**
-   * Изображение
-   */
-  title?: string;
   before?: ReactNode;
   image?: string;
-  error?: boolean;
-  errorText?: string;
-  width?: number;
 }
 
 export interface CoverLoaderState {
@@ -82,7 +68,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
   render(): JSX.Element {
     const {
       className,
-      title,
       before,
       getRef,
       getRootRef,
@@ -91,8 +76,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
       onChange,
       onDismiss,
       onLoadImage,
-      error,
-      errorText,
       width,
       image,
       ...restProps
@@ -105,10 +88,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
           className={classNames(
             className,
             getClassName('CoverLoader', platform),
-            {
-              'CoverLoader--load': !!value,
-              CoverLoader__error: error,
-            },
           )}
           style={{ ...style }}
           getRootRef={getRootRef}
@@ -130,11 +109,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
             {before && <div className="CoverLoader__before">{before}</div>}
           </div>
         </Tappable>
-        {error && (
-          <Text weight="regular" className="CoverLoader__error_text">
-            {errorText}
-          </Text>
-        )}
       </>
     );
   }
