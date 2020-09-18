@@ -35,6 +35,7 @@ interface IAudioEditorProps {
 const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEditorProps) => {
   const { audioFile } = podcast;
   const [isBlobLoading, setIsBlobLoading] = useState<boolean>(true);
+  const [isEditable, setIsEditable] = useState<boolean>(false);
   const [shouldMusicPlay, setShouldMusicPlay] = useState<boolean>(false);
   const [didMount, setDidMount] = useState<boolean>(false);
   const [selectionRegion, setSelectionRegion] = useState<any>(null);
@@ -105,6 +106,20 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
               },
             },
           });
+          selectionReg.on('update-end', () => {
+            // make a desicion if we can edit audio
+            if (selectionRegion && wavesurfer) {
+              const selectedStart = selectionRegion.start === 0;
+              const selectedEnd = selectionRegion.end === wavesurfer?.getDuration();
+              if (selectedStart && selectedEnd && isEditable) {
+                console.log('CANT')
+                setIsEditable(false);
+              }
+            } else if (!isEditable) {
+              console.log('CAN')
+              setIsEditable(true);
+            }
+          });
           setSelectionRegion(selectionReg);
         }
       });
@@ -158,6 +173,10 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
     ? 'Обрезаем...'
     : 'Подготовка редактора (пара секунд)...';
 
+  const editStyles = isEditable
+    ? {}
+    : { opacity: 0.5, pointerEvents: 'none' };
+
   return (
     <Group separator="hide">
       <CardGrid>
@@ -191,14 +210,14 @@ const AudioEditor: FunctionComponent<IAudioEditorProps> = ({ podcast }: IAudioEd
                 />
                 <div>
                   <Button
-                    style={{ width: 44, marginRight: 4 }}
+                    style={{ width: 44, marginRight: 4, ...editStyles }}
                     before={<Icon24Cut />}
                     onClick={cutAudio}
                     size="l"
                     mode="secondary"
                   />
                   <Button
-                    style={{ width: 44 }}
+                    style={{ width: 44}}
                     before={<Icon24ArrowUturnLeftOutline />}
                     size="l"
                     mode="secondary"
