@@ -34,3 +34,4 @@ const Icon24PlayCircle = props => {
 
 Icon24PlayCircle.mountIcon = mountIcon;
 export default Icon24PlayCircle;
+//# sourceMappingURL=Icon24PlayCircle.js.map

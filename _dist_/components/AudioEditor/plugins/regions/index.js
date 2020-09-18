@@ -403,3 +403,4 @@ export default class RegionsPlugin {
   }
 
 }
+//# sourceMappingURL=index.js.map

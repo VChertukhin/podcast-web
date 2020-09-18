@@ -8,3 +8,4 @@ var Component = react.Component;
 var useEffect = react.useEffect;
 var useState = react.useState;
 export { Component, useEffect, useState };
+//# sourceMappingURL=react.js.map

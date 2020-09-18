@@ -936,3 +936,4 @@ return BrowserSprite;
 });
 
 export { browserSprite as b };
+//# sourceMappingURL=browser-sprite-1d803565.js.map

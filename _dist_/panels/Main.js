@@ -30,3 +30,4 @@ export class Main extends React.Component {
   }
 
 }
+//# sourceMappingURL=Main.js.map

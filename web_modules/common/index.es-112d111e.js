@@ -343,3 +343,4 @@ if (typeof window !== 'undefined' && !window.CustomEvent) {
 var bridge = createVKBridge(version);
 
 export { bridge as b };
+//# sourceMappingURL=index.es-112d111e.js.map

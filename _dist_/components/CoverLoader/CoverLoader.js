@@ -93,3 +93,4 @@ class CoverLoader extends Component {
 }
 
 export default withPlatform(CoverLoader);
+//# sourceMappingURL=CoverLoader.js.map

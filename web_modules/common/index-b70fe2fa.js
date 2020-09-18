@@ -44,3 +44,4 @@ var es6ObjectAssign = {
 };
 
 export { es6ObjectAssign as e };
+//# sourceMappingURL=index-b70fe2fa.js.map

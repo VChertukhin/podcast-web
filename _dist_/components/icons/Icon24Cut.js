@@ -34,3 +34,4 @@ const Icon24Cut = props => {
 
 Icon24Cut.mountIcon = mountIcon;
 export default Icon24Cut;
+//# sourceMappingURL=Icon24Cut.js.map

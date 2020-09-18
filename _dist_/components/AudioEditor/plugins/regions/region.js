@@ -567,3 +567,4 @@ export class Region {
   }
 
 }
+//# sourceMappingURL=region.js.map

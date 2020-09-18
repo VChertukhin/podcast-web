@@ -34,3 +34,4 @@ const Icon24ChartUp = props => {
 
 Icon24ChartUp.mountIcon = mountIcon;
 export default Icon24ChartUp;
+//# sourceMappingURL=Icon24ChartUp.js.map

@@ -1744,3 +1744,4 @@ var VKMiniAppAPI = /** @class */ (function (_super) {
 }(VKBridgeProvider));
 
 export { VKMiniAppAPI };
+//# sourceMappingURL=vk-mini-apps-api.js.map

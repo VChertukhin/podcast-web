@@ -29,3 +29,4 @@ export const audios = [{
   photoURL: 'https://memepedia.ru/wp-content/uploads/2019/01/neskvik-s-pivom-mem.jpg',
   audioURL: 'https://vk.com/doc-34974297_50719342?hash=59b2fbeed30dbeea7a&dl=fba400c7205ff10484'
 }];
+//# sourceMappingURL=types.js.map

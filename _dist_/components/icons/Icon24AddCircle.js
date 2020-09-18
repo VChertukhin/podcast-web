@@ -34,3 +34,4 @@ const Icon24AddCircle = props => {
 
 Icon24AddCircle.mountIcon = mountIcon;
 export default Icon24AddCircle;
+//# sourceMappingURL=Icon24AddCircle.js.map

@@ -5325,3 +5325,4 @@ var PanelHeaderBack = function PanelHeaderBack(props) {
 var PanelHeaderBack$1 = /*#__PURE__*/react.memo(PanelHeaderBack);
 
 export { ActionSheet$1 as ActionSheet, ActionSheetItem, Avatar, Button$1 as Button, Caption, Card, CardGrid, Cell$1 as Cell, CellButton$1 as CellButton, Checkbox$1 as Checkbox, Div, File, FixedLayout$1 as FixedLayout, FormLayout, Group$1 as Group, Header, Headline, IOS, Input$1 as Input, Link, List, Panel$1 as Panel, PanelHeader$1 as PanelHeader, PanelHeaderBack$1 as PanelHeaderBack, Placeholder, Progress, Root$1 as Root, Search$1 as Search, Separator$1 as Separator, SimpleCell$1 as SimpleCell, Spinner$1 as Spinner, Tappable$1 as Tappable, Text, Textarea$1 as Textarea, View$1 as View, classNames, getClassname as getClassName, platform, withPlatform };
+//# sourceMappingURL=vkui.js.map

@@ -70,3 +70,4 @@ SvgIcon.defaultProps = {
 });
 
 export { SvgIcon_1 as S };
+//# sourceMappingURL=SvgIcon-3febc6b1.js.map

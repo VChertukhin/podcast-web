@@ -6,3 +6,4 @@ import { S as SvgIcon_1 } from '../../../common/SvgIcon-3febc6b1.js';
 
 var SvgIcon = SvgIcon_1.SvgIcon;
 export { SvgIcon };
+//# sourceMappingURL=SvgIcon.js.map
