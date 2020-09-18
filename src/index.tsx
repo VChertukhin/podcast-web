@@ -12,15 +12,9 @@ import './components/TimeCodeEditor/TimeCodeEditor.css';
 import './panels/Preview.css';
 import './panels/Creating.css';
 
-const isMobileApps = () => {
-  const url = new URL(window.location.href);
-  const vkPlatform = url.searchParams.get('vk_platform');
-  return vkPlatform !== null && vkPlatform !== 'desktop_web';
-};
-
 ReactDOM.render(
   <React.StrictMode>
-    <App vkAPI={new VKMiniAppAPI(bridge)} mobile={isMobileApps()} />
+    <App vkAPI={new VKMiniAppAPI(bridge)} />
   </React.StrictMode>,
   document.getElementById('root'),
 );
