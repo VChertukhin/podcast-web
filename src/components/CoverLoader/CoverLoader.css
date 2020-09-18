@@ -38,6 +38,11 @@
 
 }
 
+.CoverLoader--ios {
+    border-radius: 10px;
+
+}
+
 .CoverLoader--load {
     border: none;
 }

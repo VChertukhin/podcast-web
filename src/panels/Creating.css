@@ -20,9 +20,9 @@
     height: 48px;
     width: 48px;
     
-    border: 1px solid var(--field_border);
+    border: none;
     background-color: var(--field_background);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,6 +32,10 @@
 }
 .PodcastIcon .Icon {
     color: var(--icon_secondary);
+}
+
+.SimpleCell--ios .PodcastIcon {
+    border-radius: 10px;
 }
 
 .LoadFile {

@@ -6,7 +6,6 @@ import React, {
   MouseEventHandler,
 } from 'react';
 import {
-  Text,
   getClassName,
   classNames,
   Tappable,
@@ -20,20 +19,10 @@ export interface CoverLoaderProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement>,
     HasPlatform {
-  /**
-   * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
-   */
   onDismiss?: MouseEventHandler<HTMLDivElement>;
   onLoadImage?: (image: string) => void;
-  /**
-   * Изображение
-   */
-  title?: string;
   before?: ReactNode;
   image?: string;
-  error?: boolean;
-  errorText?: string;
-  width?: number;
 }
 
 export interface CoverLoaderState {
@@ -79,7 +68,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
   render(): JSX.Element {
     const {
       className,
-      title,
       before,
       getRef,
       getRootRef,
@@ -88,8 +76,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
       onChange,
       onDismiss,
       onLoadImage,
-      error,
-      errorText,
       width,
       image,
       ...restProps
@@ -102,10 +88,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
           className={classNames(
             className,
             getClassName('CoverLoader', platform),
-            {
-              'CoverLoader--load': !!value,
-              CoverLoader__error: error,
-            },
           )}
           style={{ ...style }}
           getRootRef={getRootRef}
@@ -127,11 +109,6 @@ class CoverLoader extends Component<CoverLoaderProps, CoverLoaderState> {
             {before && <div className="CoverLoader__before">{before}</div>}
           </div>
         </Tappable>
-        {error && (
-          <Text weight="regular" className="CoverLoader__error_text">
-            {errorText}
-          </Text>
-        )}
       </>
     );
   }
