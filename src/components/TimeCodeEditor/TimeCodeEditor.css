@@ -11,3 +11,7 @@
     margin-right: 6px;
     width: 76px;
 }
+
+.Cell__remove-marker {
+    min-width: 21px;
+}
