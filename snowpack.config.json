@@ -2,6 +2,7 @@
   "extends": "@snowpack/app-scripts-react",
   "scripts": {},
   "installOptions": {
+    "sourceMap":true,
     "namedExports": [
       "@vkontakte/icons/dist/sprite.js",
       "@vkontakte/icons/dist/SvgIcon.js"
@@ -11,7 +12,8 @@
     "port": 10888
   },
   "buildOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "sourceMaps": true
   },
   "plugins": [
     [
